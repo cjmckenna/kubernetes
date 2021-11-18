@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo Enter your desired pod network CIDR in format xxx.xxx.xxx.xxx/xx (example: 192.168.150.0/23)
+echo Enter your desired pod network CIDR in format xxx.xxx.xxx.xxx/xx
 
 read podcidr
 
