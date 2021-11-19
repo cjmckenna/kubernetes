@@ -22,6 +22,8 @@ cat <<EOF | sudo tee /etc/docker/daemon.json
 }
 EOF
 
+sleep 5
+
 systemctl daemon-reload
 
 sleep 5
