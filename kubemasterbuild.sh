@@ -16,6 +16,12 @@ cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
 deb http://packages.cloud.google.com/apt/ kubernetes-xenial main
 EOF
 
+apt-get update
+
+apt-get install -y kubelet kubeadm kubectl
+
+apt-mark hold kubelet kubeadm kubectl
+
 cat <<EOF | sudo tee /etc/docker/daemon.json
 {
     "exec-opts": ["native.cgroupdriver=systemd"]
@@ -35,12 +41,6 @@ sleep 5
 systemctl restart kubelet
 
 sleep 5
-
-apt-get update
-
-apt-get install -y kubelet kubeadm kubectl
-
-apt-mark hold kubelet kubeadm kubectl
 
 kubeadm config images pull
 
