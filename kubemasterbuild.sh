@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo Enter your desired pod network CIDR in format xxx.xxx.xxx.xxx/xx
+echo Enter your desired pod network CIDR in format xxx.xxx.xxx.xxx/xx (example: 192.168.150.0/23)
 
 read podcidr
 
@@ -24,9 +24,15 @@ EOF
 
 systemctl daemon-reload
 
+sleep 5
+
 systemctl restart docker
 
+sleep 5
+
 systemctl restart kubelet
+
+sleep 5
 
 apt-get update
 
