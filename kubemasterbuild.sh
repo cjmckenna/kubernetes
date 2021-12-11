@@ -20,7 +20,7 @@ apt-get update
 
 apt-get install -y kubelet kubeadm kubectl
 
-apt-mark hold kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
 
 cat <<EOF | sudo tee /etc/docker/daemon.json
 {
@@ -28,7 +28,7 @@ cat <<EOF | sudo tee /etc/docker/daemon.json
 }
 EOF
 
-sleep 5
+sleep 2
 
 systemctl daemon-reload
 
@@ -42,13 +42,15 @@ systemctl restart kubelet
 
 sleep 5
 
+echo starting image pulls
+
 kubeadm config images pull
 
-sudo kubeadm init --control-plane-endpoint kube-master:6443 --pod-network-cidr $podcidr
+kubeadm init --control-plane-endpoint kube-master:6443 --pod-network-cidr=$podcidr
 
 mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
 
 curl -O https://raw.githubusercontent.com/cjmckenna/kubernetes/main/calico.yaml
 
